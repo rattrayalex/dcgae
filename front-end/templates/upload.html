@@ -1,0 +1,57 @@
+{% extends "base.html" %}
+
+{% block title %}{{ block.super }} | Upload {% endblock %}
+{% block headcode %}
+	<link href="/front-end/media/uploadify3/uploadify.css" type="text/css" rel="stylesheet" />
+	<script type="text/javascript" src="/front-end/media/uploadify3/jquery.min.js"></script>
+	<script type="text/javascript" src="/front-end/media/uploadify/swfobject.js"></script>
+	<script type="text/javascript" src="/front-end/media/uploadify3/jquery.uploadify.min.js"></script>
+	<script type="text/javascript">
+	$(document).ready(function() {
+		var biscuit = document.cookie;
+		var csrf = $('input[name="csrfmiddlewaretoken"]').val();
+	  $('#file_upload').uploadify({
+		'swf'  : '/front-end/media/uploadify3/uploadify.swf',
+		'uploader'    : '/img_uploader/',
+		'cancelImg' : '/front-end/media/uploadify3/uploadify-cancel.png',
+		'cancelImage': '/front-end/media/uploadify3/uploadify-cancel.png',
+		'checkExisting': false, //'/front-end/media/uploadify3/uploadify-check-exists.php',
+		'method'    : 'POST',
+		'auto'      : false,
+		'multi'		: true, 
+		'postData'  : {sessionid: '{{ session_key }}', biscuit: biscuit, csrfmiddlewaretoken: csrf},
+		'scriptData': {biscuit: biscuit, csrfmiddlewaretoken: csrf},
+		'debug'		: true, 
+		'onQueueComplete': function(event,data) {
+			//document.getElementByID('mainForm').type = 'submit';
+			document.getElementByID('mainForm').submit();
+		}
+	  });
+	  function cow() {
+		$('#file_upload').uploadifySettings('auto', true);
+		$('#file_upload').uploadifyUpload();
+	  }
+	});
+	
+	</script>
+{% endblock headcode %}
+
+{% block content %}
+    <div class="frontcenter">
+    <div class="bigtext">Create a Project and upload images below. </div>
+    <br />
+        <form id="mainForm" action="/upload/" method="post" enctype="multipart/form-data">{% csrf_token %}
+        <table>
+        {{ project_form.as_table }}
+        <tr>
+			<th><label for="id_file_upload">Image:</label></th>
+			<td>
+				<input id="file_upload" name="file_upload" type="file" />
+			</td>
+		</tr>
+        </table>
+        <input onclick="cow()" type="submit" value="Submit" />
+        </form>
+    <div>
+{% endblock content %}
+

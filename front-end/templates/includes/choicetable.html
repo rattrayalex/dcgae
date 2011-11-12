@@ -1,0 +1,19 @@
+
+<table class="projchoose">
+
+  {% for row in project_table %}
+  <tr>
+    {% for project  in row %}
+    <td>
+      <a href="/rank/{{ project.name }}">
+        <div class="rankbox choose">
+          <div class="choicehead">{{ project.name }}</div>
+          <img src="/front-end/media/{{ project.images.all|first }}" class="rankpic choose"/>
+        </div>
+      </a>
+    </td>
+    {% endfor %}
+  </tr>
+  {% endfor %}
+
+</table>
