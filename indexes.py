@@ -1,2 +1,2 @@
 from dbindexer import autodiscover
-autodiscover()
+autodiscover() 
