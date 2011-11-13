@@ -1,8 +1,8 @@
-application: dcgae
+application: decisioncandy
 version: 1
-runtime: python27
+runtime: python25
 api_version: 1
-threadsafe: yes
+
 
 builtins:
 - remote_api: on
@@ -10,9 +10,6 @@ builtins:
 inbound_services:
 - warmup
 
-libraries:
-- name: django
-  version: latest
 
 handlers:
 - url: /_ah/queue/deferred

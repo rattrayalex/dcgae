@@ -22,4 +22,5 @@ urlpatterns = patterns('',
     (r'^upload/$', upload_files),
     (r'vote/$', vote),
     (r'^img_uploader/$', myFileHandler),
+    (r'image_handler/(.+)/(.+)$', image_handler),
     )

@@ -15,10 +15,10 @@ import logging
 
 class SWFUploadMiddleware(object):
     def process_request(self, request):
-        logging.warning("in swfuploadmiddlware thing")
+##        logging.warning("in swfuploadmiddlware thing")
         if (request.method == 'POST') and (request.path == reverse('app.views.myFileHandler')) and \
                 request.POST.has_key(settings.SESSION_COOKIE_NAME):
-            logging.warning("if statement true")
+##            logging.warning("if statement true")
             request.COOKIES[settings.SESSION_COOKIE_NAME] = request.POST[settings.SESSION_COOKIE_NAME]
 
 class take3():

@@ -11,7 +11,26 @@
   <br /><br />
   Go ahead and pick a project below to see what it's like.<br />-->
 </div>
+<script>
+	var 
+</script>
+<table class="projchoose">
 
-{% include "includes/choicetable.html" %}
+  {% for row in project_table %}
+  <tr>
+    {% for project in row %}
+    <td>
+      <a href="/rank/{{ project.name }}">
+        <div class="rankbox choose">
+          <div class="choicehead">{{ project.name }}</div>
+          <img src="image_handler/{{ project.name }}/0" class="rankpic choose"/>
+        </div>
+      </a>
+    </td>
+    {% endfor %}
+  </tr>
+  {% endfor %}
+
+</table>
 
 {% endblock content %}

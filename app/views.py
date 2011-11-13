@@ -15,6 +15,7 @@ from google.appengine.api.images import Image as IMG
 from django.core.files.uploadedfile import InMemoryUploadedFile
 from filetransfers.api import prepare_upload
 import settings
+from google.appengine.ext import db
 
 from app.models import *
 
@@ -23,6 +24,18 @@ import os, sys, datetime, copy, logging
 
 ROW_WIDTH = 3
 
+def image_handler(request, project, ID):
+  project_name = str(project).replace('%20',' ')
+  logging.warning(project_name)
+  project = Project.objects.get(name=project_name)
+  if project.images:
+    headers = "Content-Type: image/png"
+    if int(ID) == 0:
+      logging.warning("ID was zero")
+      the_image = project.images.all()[0].full
+    else:
+      the_image = project.images.get(id=int(ID)).full
+    return HttpResponse(the_image, headers)
 
 def divide(n, k):
   '''Divide n into sets of size of k or smaller.'''
@@ -47,8 +60,9 @@ def isUnique(matrix, pair):
 
 def rank(request, project): 
   project_name = str(project)
-  project =  Project.objects.get(name=project_name)
-  images = [image.large for image in project.images.all()]
+  project = Project.objects.get(name=project_name)
+  images = [image.id for image in project.images.all()]
+  logging.warning(images)
   
   n = len(images)
   k = 2
@@ -84,8 +98,8 @@ def vote(request):
   if request.method == 'POST':
     data = request.POST
     print data
-    w = Image.objects.get(large__exact=data['winner'])
-    l = Image.objects.get(large__exact=data['loser'])
+    w = Image.objects.get(id__exact=data['winner'])
+    l = Image.objects.get(id__exact=data['loser'])
     print w, l
     vote = Vote(
     winner = w,
@@ -144,18 +158,21 @@ class create_project(forms.Form):
   criteria = forms.CharField(max_length=100, label="Criteria (Which one ___?)")
   more_criteria = forms.CharField(widget=forms.Textarea, label="More Criteria (what else is important?)")
 
-class upload_image_form(forms.Form):
-  filename = forms.ImageField(label = "Image")
-
 def myFileHandler(request):
-  logging.warning("made it to myFileHandler")
   if request.method == 'POST':
-    logging.warning("request is post!")
     for field_name in request.FILES:
-      logging.warning("in for loop")
       uploaded_file = request.FILES[field_name]
       logging.warning(uploaded_file)
+      large_size = 330, 230
+      medium_size = 210, 150
+      project = request.POST['project']
 
+      new_image = Image()
+      new_image.project = Project.objects.get(name=project)
+      new_image.full = db.Blob(uploaded_file.read())
+      new_image.large = db.Blob(uploaded_file.read())
+      new_image.medium = db.Blob(uploaded_file.read())
+      new_image.save()
       # write the file into /tmp
 ##      destination_path = '/front-end/media/projects/%s' % (uploaded_file.name)
 ##      destination = open(destination_path, 'wb')
@@ -165,48 +182,36 @@ def myFileHandler(request):
 
     return HttpResponse("ok", mimetype="text/plain")
 
-def upload_files(request):
-  UploaderFormset = formset_factory(upload_image_form)
+def upload_project(request):
   if request.method == 'POST':
-    logging.warning("trying to upload projects")
-    image_form = UploaderFormset(request.POST, request.FILES)
-    gae_image1 = request.FILES['form-0-filename'].read()
-    logging.warning(gae_image1)
-    project_form = create_project(request.POST)
-    if image_form.is_valid() and project_form.is_valid():
-      logging.warning("%s", image_form.cleaned_data['name']) 
-      if len(request.FILES) < 2:
-        return HttpResponse('Upload more pix!')
-      else:
-        new_project = Project(
-          name=project_form.cleaned_data['name'],
-          description=project_form.cleaned_data['description'],
-          creator = request.user.client,
-          reward = 0,
-          criteria = project_form.cleaned_data['criteria'],
-          more_criteria = project_form.cleaned_data['more_criteria']
-          )
-        new_project.save()
-        n = 0
-        large_size = 330, 230
-        medium_size = 210, 150
-        project = Project.objects.get(name=project_form.cleaned_data['name'])
-        for image in request.FILES:
-          datapoint = 'form-%s-filename' % str(n)
-          full = request.FILES[datapoint]
-          i = Image(project=project, full=full)
-          i.save()
-          n += 1
-        return HttpResponseRedirect('../rank/'+ project.name.replace(' ', '%20'))
+    logging.warning("trying to upload project")
+    logging.warning(request.POST)
+##    logging.warning(request.user)
+    name = request.POST['name']
+    new_project = Project(
+      name = name,
+      description = request.POST['description'],
+      creator = request.user.client,
+      reward = 0,
+      criteria = request.POST['criteria'],
+      more_criteria = request.POST['more_criteria']
+      )
+    logging.warning(name)
+    new_project.save()
+    project = Project.objects.get(name=name)
+    from django.utils import simplejson
+    return HttpResponse(simplejson.dumps({'project':name}), content_type="application/json")
+
+def upload_files(request):
+  if request.method == 'POST':
+    return upload_project(request)
   else:
       project_form = create_project()
-      image_form = UploaderFormset()
   # This is filetransfers stuff
 ##  upload_url, upload_data = prepare_upload(request, view_url)
   
   context = {
     'project_form': project_form,
-    'image_form': image_form,
     'user': request.user,
 ##    'session_cookie_name': settings.SESSION_COOKIE_NAME,
     'session_key': request.session.session_key
@@ -248,9 +253,10 @@ def logout(request):
 
 def results(request, project):
   project_name = str(project)
-  images = list(Image.objects.filter(project__name=project_name))
+  project = Project.objects.get(name = project_name)
+  images = [img for img in project.images.all()]
+##  images = list(Image.objects.filter(project__name=project_name))s
   images.sort(key = lambda x: -x.score)
-  project = Project.objects.get(name=project_name)
   context = {
     'image_list': divide(images, ROW_WIDTH),
     'project': project,
