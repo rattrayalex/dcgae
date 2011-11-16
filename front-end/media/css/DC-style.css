@@ -4,7 +4,7 @@
 /*Some general rules*/
 body {
 	font-family:'Arvo', Verdana, Geneva, sans-serif;
-	background-image:url(../images/gradient_texture20100901.JPG); background-repeat:repeat-x;
+	background-image:url(../images/gradient_texture20100901.jpg); background-repeat:repeat-x;
 	background-color:#f6f6f8;
 }
 
@@ -243,3 +243,15 @@ textarea {
 table {
 	margin:auto;
 }*/
+
+.jtainer {
+	-moz-border-radius: 5px;
+	-webkit-border-radius: 5px;
+	border-radius: 5px;
+	background: #E3E3E3 url("/front-end/media/images/dark-grey-pattern.jpg") repeat;
+	border-bottom: 1px solid #FDFDFD;
+	border-left: 1px solid #C6C6C6;
+	border-right: 1px solid #C6C6C6;
+	border-top: 1px solid #B8B8B8;
+	width:800px;
+}
