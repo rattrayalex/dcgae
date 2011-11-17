@@ -16,7 +16,8 @@
 	$('input').addClass('validate[required]');
 	$('textarea').addClass('validate[required]');
 	$("#mainForm").validationEngine('attach');
-	
+		var biscuit = document.cookie;
+		var csrf = $('input[name="csrfmiddlewaretoken"]').val();
 	  $('#file_upload').uploadify({
 		'swf'  : '/front-end/media/uploadify3/uploadify.swf',
 		'uploader'    : '/img_uploader/',
@@ -26,13 +27,13 @@
 		'checkExisting': false, //'/front-end/media/uploadify3/uploadify-check-exists.php',
 		'auto'      : false,
 		'multi'		: true, 
-		//'scriptData': {biscuit: biscuit, csrfmiddlewaretoken: csrf},
-		'debug'		: false,
+		'scriptData': {biscuit: biscuit, csrfmiddlewaretoken: csrf},
+		'debug'		: true,
 		'onUploadSuccess': function (file, data, response) {
 			$('#file_upload').uploadifyUpload();
 			},
-		'fileExt' : '*.jpg, *.gif, *.png, *.tif, *.tiff, *.jpeg',
-		'fileDesc': 'Image Files',
+		'fileTypeExts' : '*.jpg; *.gif; *.png; *.tif; *.tiff; *.jpeg; *.JPG; *.GIF; *.PNG; *.TIF; *.TIFF; *.JPEG;',
+		'fileTypeDesc': 'Image Files',
 		'onDialogClose' : function () {
 			var queuelength = $('.uploadifyQueueItem').length;
 			if (queuelength < 2) {
@@ -40,7 +41,11 @@
 			}
 		},
 		'onQueueComplete' :  function() {
+			alert('queue complete');
 			setTimeout("pageRedirect()", 5000);
+		},
+		'onUploadStart' : function () {
+			alert('upload start thing called');
 		}
 	  });
 	  
@@ -68,6 +73,7 @@
 							csrfmiddlewaretoken: csrf,
 							project: project_name};
 				$('#file_upload').uploadifySettings('postData', postData_settings);
+				alert('about to upload!');
 				uploadify_alex();
 			},
 			error: function(xhr, status, exception) {

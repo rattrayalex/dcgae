@@ -159,6 +159,7 @@ class create_project(forms.Form):
   more_criteria = forms.CharField(widget=forms.Textarea, label="More Criteria (what else is important?)")
 
 def myFileHandler(request):
+  logging.warning(request)
   if request.method == 'POST':
     for field_name in request.FILES:
       uploaded_file = request.FILES[field_name]

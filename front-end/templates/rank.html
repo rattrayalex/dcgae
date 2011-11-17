@@ -76,50 +76,50 @@ $(document).ready(function() {
   {% endblock %}
 
   {% block content %}
-<div class="jtainer">
-  <div class="bigtext frontcenter bluetext" id="whichone">Which one...</div>
+	<div class="jtainer">
+	  <div class="bigtext frontcenter bluetext" id="whichone">Which one...</div>
 
-  <div class="bigtext orangetext" id="isbest" title="{{ Project.more_criteria }}">
-    {{ Project.criteria }}?
-    <div class="littlelink">
-      <span class="bluetext" title="{{ Project.more_criteria }}">
-        hover for more criteria
-      </span>
-        <div class="progressbar">
-            <div id="progress">
-            </div>
-            <br/>
-            {% if Project.reward > 0 %}$
-            {{ Project.reward }}
-            {% endif %}
-        </div>
-    </div>
-  </div>
+	  <div class="bigtext orangetext" id="isbest" title="{{ Project.more_criteria }}">
+		{{ Project.criteria }}?
+		<div class="littlelink">
+		  <span class="bluetext" title="{{ Project.more_criteria }}">
+			hover for more criteria
+		  </span>
+			<div class="progressbar">
+				<div id="progress">
+				</div>
+				<br/>
+				{% if Project.reward > 0 %}$
+				{{ Project.reward }}
+				{% endif %}
+			</div>
+		</div>
+	  </div>
 
-  <div id="main">
-      <div class="ranking" id="mainranking">
-        <a onclick="" id="left_link" class="handcursor">{% csrf_token %}
-          <div class="rankbox left">
-	          <img id="left_img" src='' class="rankpic"/>
-          </div>
-        </a>
-        <a onclick="updateList()" id="cantdecide" class="handcursor">
-            <div class="rankbuttons">
-              <div class="indecisive">Can't decide.</div>
-            </div>
-        </a>
-        <a onclick="" id="right_link" class="handcursor">{% csrf_token %}
-            <div class="rankbox right" id="rb_r">
-              <img id="right_img" src='' class="rankpic"/>
-            </div>
-        </a>
-    </div>
-    
-    <div id="fake">
-    
-    </div>
-  </div>
-</div>
+	  <div id="main">
+		  <div class="ranking" id="mainranking">
+			<a onclick="" id="left_link" class="handcursor">{% csrf_token %}
+			  <div class="rankbox left">
+				  <img id="left_img" src='' class="rankpic"/>
+			  </div>
+			</a>
+			<a onclick="updateList()" id="cantdecide" class="handcursor">
+				<div class="rankbuttons">
+				  <div class="indecisive">Can't decide.</div>
+				</div>
+			</a>
+			<a onclick="" id="right_link" class="handcursor">{% csrf_token %}
+				<div class="rankbox right" id="rb_r">
+				  <img id="right_img" src='' class="rankpic"/>
+				</div>
+			</a>
+		</div>
+		
+		<div id="fake">
+		
+		</div>
+	  </div>
+	</div>
 
   <!--everything below the ranking goes here -->
   <div class="belowranking">   
