@@ -4,11 +4,25 @@
 
 
 {% block content %}
-    <div class="frontcenter">
+    <div class="jtainer">
+		<div class="frontcenter bigtext">Sign on up!</div><br />
         <form action="/signup/" method="post" style="width:500px;">{% csrf_token %}
-        {{ form.as_p }}
-        <input type="submit" value="Submit" />
-        </form>
+		<fieldset>
+        {% for field in form %}
+			<div class="clearfix">
+				{{ field.label_tag }}
+				<div class="input">
+					{{ field }}
+				</div>
+			</div>
+		{% endfor %}
+		<div class="clearfix">
+			<div class="input">
+				<input type="submit" value="Sign Up" class="btn large primary"/>
+			</div>
+		</div
+        </fieldset>
+		</form>
     <div>
 {% endblock content %}
 

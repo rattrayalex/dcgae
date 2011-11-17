@@ -1,7 +1,8 @@
 application: decisioncandy
 version: 1
-runtime: python
+runtime: python27
 api_version: 1
+threadsafe: yes
 
 builtins:
 - remote_api: on
@@ -9,17 +10,21 @@ builtins:
 inbound_services:
 - warmup
 
+libraries:
+- name: django
+  version: latest
+
 handlers:
 - url: /_ah/queue/deferred
-  script: djangoappengine/deferred/handler.py
+  script: djangoappengine.deferred.handler.application
   login: admin
 
 - url: /_ah/stats/.*
-  script: djangoappengine/appstats/application.py
+  script: djangoappengine.appstats.application
 
 - url: /media/admin
   static_dir: django/contrib/admin/media
   expiration: '0'
 
 - url: /.*
-  script: djangoappengine/main/application.py
+  script: djangoappengine.main.application

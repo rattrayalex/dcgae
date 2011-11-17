@@ -2,62 +2,108 @@
 
 {% block title %}{{ block.super }} | Upload {% endblock %}
 {% block headcode %}
-	<link href="/front-end/media/uploadify3/uploadify.css" type="text/css" rel="stylesheet" />
+	<link rel="stylesheet" href="/front-end/media/css/swfupload.css"></link>
 	<link rel="stylesheet" href="/front-end/media/jQuery-Validation-Engine/css/validationEngine.jquery.css" type="text/css"/>
-	<script type="text/javascript" src="/front-end/media/uploadify3/jquery.min.js"></script>
 	<script type="text/javascript" src="/front-end/media/uploadify/swfobject.js"></script>
-	<script type="text/javascript" src="/front-end/media/uploadify3/jquery.uploadify.js"></script>
 	<script src="/front-end/media/jQuery-Validation-Engine/js/languages/jquery.validationEngine-en.js" type="text/javascript" charset="utf-8"></script>
 	<script text="text/javascript" src="/front-end/media/jQuery-Validation-Engine/js/jquery.validationEngine.js"></script>
 	
+	<script type="text/javascript" src="/front-end/media/SWFUpload/swfupload.js"></script>
+	<!--<script type="text/javascript" src="/front-end/media/SWFUpload/plugins/swfupload.cookies.js"></script>-->
+	<script type="text/javascript" src="/front-end/media/SWFUpload/handlers.js"></script>
+	<script type="text/javascript" src="/front-end/media/SWFUpload/fileprogress.js"></script>
+	<script type="text/javascript" src="/front-end/media/SWFUpload/plugins/swfupload.queue.js"></script>
 	<script type="text/javascript">
 	var project_name = '';
+	var swfu;
 	$(document).ready(function() {
+		
+	var btn_width = $('#dummy_button').width();
+	var btn_height = $('#dummy_button').height();
+	var btn_padding_top = $('#dummy_button').css("padding-top");
+	var btn_padding_right = $('#dummy_button').css("padding-right");
+	var target_height = btn_height + 2 * parseInt(btn_padding_top);
+	var target_width = btn_width + 2 * parseInt(btn_padding_right);
 	$('input').addClass('validate[required]');
 	$('textarea').addClass('validate[required]');
 	$("#mainForm").validationEngine('attach');
-		var biscuit = document.cookie;
-		var csrf = $('input[name="csrfmiddlewaretoken"]').val();
-	  $('#file_upload').uploadify({
-		'swf'  : '/front-end/media/uploadify3/uploadify.swf',
-		'uploader'    : '/img_uploader/',
-		'cancelImg' : '/front-end/media/uploadify3/uploadify-cancel.png',
-		'cancelImage': '/front-end/media/uploadify3/uploadify-cancel.png',
-		'method'    : 'POST',
-		'checkExisting': false, //'/front-end/media/uploadify3/uploadify-check-exists.php',
-		'auto'      : false,
-		'multi'		: true, 
-		'scriptData': {biscuit: biscuit, csrfmiddlewaretoken: csrf},
-		'debug'		: true,
-		'onUploadSuccess': function (file, data, response) {
-			$('#file_upload').uploadifyUpload();
-			},
-		'fileTypeExts' : '*.jpg; *.gif; *.png; *.tif; *.tiff; *.jpeg; *.JPG; *.GIF; *.PNG; *.TIF; *.TIFF; *.JPEG;',
-		'fileTypeDesc': 'Image Files',
-		'onDialogClose' : function () {
-			var queuelength = $('.uploadifyQueueItem').length;
-			if (queuelength < 2) {
-				alert('Please select at least two images to upload');
+	var biscuit = document.cookie;
+	var csrf = $('input[name="csrfmiddlewaretoken"]').val();
+	
+	$('#mainSubmit').click(function () {submit_func();});
+	
+	swfu = new SWFUpload({
+		upload_url : "/img_uploader/",
+		flash_url : "/front-end/media/SWFUpload/Flash/swfupload.swf",
+		file_size_limit : "10 MB",
+		button_placeholder_id:"file_upload",
+		button_width: btn_width,
+		button_height: btn_height,
+		button_cursor: SWFUpload.CURSOR.HAND,
+		button_window_mode : SWFUpload.WINDOW_MODE.TRANSPARENT,
+		button_text: "",
+		post_params: {sessionid: '{{ session_key }}', 
+							biscuit: biscuit, 
+							csrfmiddlewaretoken: csrf,
+							project: project_name}, //somehow make the project name go in here
+		file_types: '*.jpg; *.gif; *.png; *.tif; *.tiff; *.jpeg; *.JPG; *.GIF; *.PNG; *.TIF; *.TIFF; *.JPEG;',
+		file_types_description: 'Image Files',
+		file_size_limit:'10 MB',
+		debug:false,
+		
+		file_dialog_start_handler : fileDialogStart,
+		file_queued_handler : fileQueued,
+		file_queue_error_handler : fileQueueError,
+		//file_dialog_complete_handler : fileDialogComplete,
+		upload_start_handler : uploadStart,
+		upload_progress_handler : uploadProgress,
+		upload_error_handler : uploadError,
+		upload_success_handler : uploadSuccess,
+		
+		
+		file_dialog_complete_handler: function (numFilesSelected, numFilesQueued) {
+			try {
+				if (this.getStats().files_queued > 0) {
+					document.getElementById(this.customSettings.cancelButtonId).disabled = false;
+					if (this.getStats().files_queued < 2) {
+						alert('Please select at least 2 images.');
+					}
+				}
+				
+				/* I want auto start and I can do that here */
+				//this.startUpload();
+			} catch (ex)  {
+				this.debug(ex);
 			}
 		},
-		'onQueueComplete' :  function() {
-			alert('queue complete');
-			setTimeout("pageRedirect()", 5000);
+		upload_complete_handler: function(file) {
+			try {
+				/*  I want the next upload to continue automatically so I'll call startUpload here */
+				if (this.getStats().files_queued === 0) {
+					document.getElementById(this.customSettings.cancelButtonId).disabled = true;
+					setTimeout("pageRedirect()", 5000);
+				} else {	
+					this.startUpload();
+				}
+			} catch (ex) {
+				this.debug(ex);
+			}
 		},
-		'onUploadStart' : function () {
-			alert('upload start thing called');
-		}
-	  });
-	  
+		custom_settings : {
+					progressTarget : "fsUploadProgress1",
+					cancelButtonId : "btnCancel1"
+		},
+		});
+		
+	  $('#SWFUpload_0').css("left",target_width*-1).css("width",target_width).css("height",target_height);
 	});
-	function uploadify_alex() {
-		$('#file_upload').uploadifyUpload();
-	  }
+
 	function pageRedirect() {
 		window.location.href = '../rank/' + project_name.replace(/ /gi, '%20');
 	}
+
 	function submit_func() {
-		if ($('.uploadifyQueueItem').length >= 2) {
+		if ($('.progressContainer').length >= 2) {
 			var form_data = $('#mainForm').serialize();
 			$.ajax({
 			url: '/upload/', 
@@ -65,6 +111,7 @@
 			data: form_data,
 			dataType: 'json',
 			success: function(data, status, xhr) {
+				$('#mainSubmit').unbind();
 				var biscuit = document.cookie;
 				var csrf = $('input[name="csrfmiddlewaretoken"]').val();
 				project_name = data['project'];
@@ -72,9 +119,10 @@
 							biscuit: biscuit, 
 							csrfmiddlewaretoken: csrf,
 							project: project_name};
-				$('#file_upload').uploadifySettings('postData', postData_settings);
-				alert('about to upload!');
-				uploadify_alex();
+				//$('#file_upload').uploadifySettings('postData', postData_settings);
+				swfu.setPostParams(postData_settings);
+				//alert('about to upload!');
+				swfu.startUpload();
 			},
 			error: function(xhr, status, exception) {
 				alert('Something went wrong!');
@@ -88,21 +136,40 @@
 {% endblock headcode %}
 
 {% block content %}
+<div class="jtainer">
     <div class="frontcenter">
     <div class="bigtext">Create a Project and upload images below. </div>
+	</div>
     <br />
-        <form id="mainForm" action="/project_uploader/" method="post" enctype="multipart/form-data">{% csrf_token %}
-        <table>
-        {{ project_form.as_table }}
-        <tr>
-			<th><label for="id_file_upload">Image:</label></th>
-			<td>
-				<input id="file_upload" name="file_upload" type="file" />
-			</td>
-		</tr>
-        </table>
-        <input onclick="javascript:submit_func()" type="button" value="Submit" />
-        </form>
-    <div>
+        <form style="margin-left:auto; margin-right:auto; width:600px;" id="mainForm" action="/project_uploader/" method="post" enctype="multipart/form-data">{% csrf_token %}
+        <fieldset>
+		{% for field in project_form %}
+			<div class="clearfix">
+				{{ field.label_tag }}
+				<div class="input">
+					{{ field }}
+				</div>
+			</div>
+		{% endfor %}
+			<div class="clearfix">
+				<label for="id_file_upload">Image:</label>
+				<div class="input">
+					<div id="fsUploadProgress1"></div>
+					<input id="dummy_button" type="button" class="btn large" value="Select Images"></input>
+					<div id="file_upload" name="file_upload" type="file"></div>
+				</div>
+			</div>
+			<div class="clearfix">
+				<div class="input"><input id="btnCancel1" type="button" class="btn" value="Cancel Uploads" onclick="cancelQueue(swfu);" disabled="disabled"/>
+				</div>
+			</div>
+			<div class="clearfix">
+				<div class="input">
+					<input id="mainSubmit" type="button" value="Submit" class="btn primary large"/>
+				</div>
+			</div>
+		</fieldset>
+		</form>
+</div>
 {% endblock content %}
 

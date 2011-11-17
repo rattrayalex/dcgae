@@ -6,6 +6,8 @@ body {
 	font-family:'Arvo', Verdana, Geneva, sans-serif;
 	background-image:url(../images/gradient_texture20100901.jpg); background-repeat:repeat-x;
 	background-color:#f6f6f8;
+	line-height:inherit;
+	font-size:12pt;
 }
 
 a {
@@ -15,6 +17,7 @@ a {
 
 a:hover {
 	color:#555;
+	text-decoration:none;
 }
 
 /*because I'm afraid of h1*/
@@ -31,7 +34,7 @@ a:hover {
 }
 
 /*the header bar at the top of every page*/
-.topbar {
+.alex-topbar {
 	left:0px;
 	right:0px;
 	top:0px;
@@ -209,6 +212,7 @@ td .rankbox{
 
 .bluetext, a {
 	color:#8FBCFF;
+
 }
 
 .orangetext {
@@ -227,22 +231,6 @@ td .rankbox{
 .handcursor {
 	cursor:pointer;
 }
-/*div.frontcenter form table tbody tr th {
-	text-align:right;
-}
-
-input {
-	width:300px;
-}
-
-textarea {
-	width:300px;
-	height:40px;
-}
-
-table {
-	margin:auto;
-}*/
 
 .jtainer {
 	-moz-border-radius: 5px;
@@ -254,4 +242,24 @@ table {
 	border-right: 1px solid #C6C6C6;
 	border-top: 1px solid #B8B8B8;
 	width:800px;
+	margin: 100px auto 0px auto;
+}
+
+.jtainer .frontcenter {
+	margin-top:0px;
+}
+
+form {
+margin-left:auto; margin-right:auto; width:600px
+}
+
+input, textarea {
+	width:300px;
+}
+
+.betatag {
+	font-size:20px;
+	position:absolute;
+	top:6px; left:265px;
+	z-index:500;
 }

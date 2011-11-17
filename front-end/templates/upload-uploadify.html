@@ -1,0 +1,108 @@
+{% extends "base.html" %}
+
+{% block title %}{{ block.super }} | Upload {% endblock %}
+{% block headcode %}
+	<link href="/front-end/media/uploadify3/uploadify.css" type="text/css" rel="stylesheet" />
+	<link rel="stylesheet" href="/front-end/media/jQuery-Validation-Engine/css/validationEngine.jquery.css" type="text/css"/>
+	<script type="text/javascript" src="/front-end/media/uploadify3/jquery.min.js"></script>
+	<script type="text/javascript" src="/front-end/media/uploadify/swfobject.js"></script>
+	<script type="text/javascript" src="/front-end/media/uploadify3/jquery.uploadify.js"></script>
+	<script src="/front-end/media/jQuery-Validation-Engine/js/languages/jquery.validationEngine-en.js" type="text/javascript" charset="utf-8"></script>
+	<script text="text/javascript" src="/front-end/media/jQuery-Validation-Engine/js/jquery.validationEngine.js"></script>
+	
+	<script type="text/javascript">
+	var project_name = '';
+	$(document).ready(function() {
+	$('input').addClass('validate[required]');
+	$('textarea').addClass('validate[required]');
+	$("#mainForm").validationEngine('attach');
+		var biscuit = document.cookie;
+		var csrf = $('input[name="csrfmiddlewaretoken"]').val();
+	  $('#file_upload').uploadify({
+		'swf'  : '/front-end/media/uploadify3/uploadify.swf',
+		'uploader'    : '/img_uploader/',
+		'cancelImg' : '/front-end/media/uploadify3/uploadify-cancel.png',
+		'cancelImage': '/front-end/media/uploadify3/uploadify-cancel.png',
+		'method'    : 'POST',
+		'checkExisting': false, //'/front-end/media/uploadify3/uploadify-check-exists.php',
+		'auto'      : false,
+		'multi'		: true, 
+		'scriptData': {biscuit: biscuit, csrfmiddlewaretoken: csrf},
+		'debug'		: true,
+		'onUploadSuccess': function (file, data, response) {
+			$('#file_upload').uploadifyUpload();
+			},
+		'fileTypeExts' : '*.jpg; *.gif; *.png; *.tif; *.tiff; *.jpeg; *.JPG; *.GIF; *.PNG; *.TIF; *.TIFF; *.JPEG;',
+		'fileTypeDesc': 'Image Files',
+		'onDialogClose' : function () {
+			var queuelength = $('.uploadifyQueueItem').length;
+			if (queuelength < 2) {
+				alert('Please select at least two images to upload');
+			}
+		},
+		'onQueueComplete' :  function() {
+			alert('queue complete');
+			setTimeout("pageRedirect()", 5000);
+		},
+		'onUploadStart' : function () {
+			alert('upload start thing called');
+		}
+	  });
+	  
+	});
+	function uploadify_alex() {
+		$('#file_upload').uploadifyUpload();
+	  }
+	function pageRedirect() {
+		window.location.href = '../rank/' + project_name.replace(/ /gi, '%20');
+	}
+	function submit_func() {
+		if ($('.uploadifyQueueItem').length >= 2) {
+			var form_data = $('#mainForm').serialize();
+			$.ajax({
+			url: '/upload/', 
+			type: 'POST',
+			data: form_data,
+			dataType: 'json',
+			success: function(data, status, xhr) {
+				var biscuit = document.cookie;
+				var csrf = $('input[name="csrfmiddlewaretoken"]').val();
+				project_name = data['project'];
+				var postData_settings = {sessionid: '{{ session_key }}', 
+							biscuit: biscuit, 
+							csrfmiddlewaretoken: csrf,
+							project: project_name};
+				$('#file_upload').uploadifySettings('postData', postData_settings);
+				alert('about to upload!');
+				uploadify_alex();
+			},
+			error: function(xhr, status, exception) {
+				alert('Something went wrong!');
+			}
+			//$('#mainForm').submit();
+			});
+		}
+		else { alert('Please select at least two images to upload');}
+	};
+	</script>
+{% endblock headcode %}
+
+{% block content %}
+    <div class="frontcenter">
+    <div class="bigtext">Create a Project and upload images below. </div>
+    <br />
+        <form id="mainForm" action="/project_uploader/" method="post" enctype="multipart/form-data">{% csrf_token %}
+        <table>
+        {{ project_form.as_table }}
+        <tr>
+			<th><label for="id_file_upload">Image:</label></th>
+			<td>
+				<input id="file_upload" name="file_upload" type="file" />
+			</td>
+		</tr>
+        </table>
+        <input onclick="javascript:submit_func()" type="button" value="Submit" />
+        </form>
+    <div>
+{% endblock content %}
+
