@@ -82,13 +82,14 @@ a:hover {
 }
 
 /*where the images go.*/
+
 .rankbox, .indecisive {
 	padding:0px;
 	-moz-box-shadow: 0px 0px 10px #8FBCFF;
     -webkit-box-shadow: 0px 0px 10px #8FBCFF;
     box-shadow: 0px 0px 10px #8FBCFF;
 	position:absolute;
-        background-color:white;
+    background-color:white;
 	/* background-image:url(images/whitey.png);	*/
 	/* border: 5px dashed #CCC;     */
 }
@@ -105,7 +106,7 @@ a:hover {
 	margin: 0px 75px 0px 75px;
 	top:0px;
 	padding:5px;
-	text-align:center;
+	display: table-cell; text-align:center; vertical-align:middle;
 	overflow:hidden;
 	/*background-image:url(../images/ps-trans-bg-1.PNG);*/
 }
@@ -131,6 +132,7 @@ td .rankbox{
 	max-width:300px;
 	max-height:250px;
 	position:relative;
+	vertical-align:middle;
 }
 
 /*the left rank div*/
@@ -185,18 +187,28 @@ td .rankbox{
 }
 
 .projchoose {
-	width:80%;
+	width:1020px;
 	margin-left:auto;
 	margin-right:auto;
-	position:relative;
 }
-
+.projchoose .row {
+	margin-left:0px;
+}
 .rankbox.choose {
 	position:relative;
-	margin:25px;
+	margin:0px;
+	width: 290px;
+	
+}
+
+.row > [class*="span"] {
+	margin: 20px;
+	padding: 5px;
 }
 
 .rankpic.choose {
+	margin:auto;
+	padding:0px;
 }
 
 .footer {
@@ -262,4 +274,10 @@ input, textarea {
 	position:absolute;
 	top:6px; left:265px;
 	z-index:500;
+}
+
+.rankbox.results {
+	width:100%;
+	position:relative;
+	display:block;
 }

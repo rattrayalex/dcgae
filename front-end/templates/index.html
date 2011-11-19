@@ -14,23 +14,23 @@
 <script>
 	var 
 </script>
-<table class="projchoose">
+<div class="projchoose">
 
   {% for row in project_table %}
-  <tr>
+  <div class="row">
     {% for project in row %}
-    <td>
+    <div class="span-one-third">
       <a href="/rank/{{ project.name }}">
         <div class="rankbox choose">
           <div class="choicehead">{{ project.name }}</div>
           <img src="image_handler/{{ project.name }}/0" class="rankpic choose"/>
         </div>
       </a>
-    </td>
+    </div>
     {% endfor %}
-  </tr>
+  </div>
   {% endfor %}
 
-</table>
+</div>
 
 {% endblock content %}
