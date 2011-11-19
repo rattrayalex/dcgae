@@ -11,7 +11,7 @@ from django.contrib.auth.models import User
 from django.contrib import auth
 from django.forms.formsets import formset_factory
 from operator import mul
-from google.appengine.api import images 
+from google.appengine.api.images import Image as IMG
 from django.core.files.uploadedfile import InMemoryUploadedFile
 from filetransfers.api import prepare_upload
 import settings
@@ -24,20 +24,17 @@ import os, sys, datetime, copy, logging
 
 ROW_WIDTH = 3
 
-def image_handler(request, project, ID, size):
+def image_handler(request, project, ID):
   project_name = str(project).replace('%20',' ')
   logging.warning(project_name)
   project = Project.objects.get(name=project_name)
   if project.images:
     headers = "Content-Type: image/png"
     if int(ID) == 0:
-#      logging.warning("ID was zero")
-      img = project.images.all()[0]
-      the_image = img.full if size=='full' else img.medium
+      logging.warning("ID was zero")
+      the_image = project.images.all()[0].full
     else:
-      img = project.images.get(id=int(ID))
-      logging.info(size=='full')
-      the_image = img.full if size=='full' else img.medium
+      the_image = project.images.get(id=int(ID)).full
     return HttpResponse(the_image, headers)
 
 def divide(n, k):
@@ -55,7 +52,9 @@ def index(request):
 
 def isUnique(matrix, pair):
   for p in matrix:
+##    print "testing..."
     if (p[0]==pair[0] and p[1]==pair[1]) or (p[1]==pair[0] and p[0]==pair[1]):
+##      print "it's not unique!"
       return False
   return True
 
@@ -168,15 +167,20 @@ def myFileHandler(request):
       large_size = 330, 230
       medium_size = 210, 150
       project = request.POST['project']
-      img = images.Image(uploaded_file.read())
-      img.resize(width=330, height=230)
-      thumb = img.execute_transforms(output_encoding=images.PNG)
+
       new_image = Image()
       new_image.project = Project.objects.get(name=project)
       new_image.full = db.Blob(uploaded_file.read())
       new_image.large = db.Blob(uploaded_file.read())
-      new_image.medium = db.Blob(thumb)
+      new_image.medium = db.Blob(uploaded_file.read())
       new_image.save()
+      # write the file into /tmp
+##      destination_path = '/front-end/media/projects/%s' % (uploaded_file.name)
+##      destination = open(destination_path, 'wb')
+##      for chunk in uploaded_file.chunks():
+##        destination.write(chunk)
+##      destination.close()
+
     return HttpResponse("ok", mimetype="text/plain")
 
 def upload_project(request):
