@@ -168,12 +168,13 @@ def myFileHandler(request):
       large_size = 330, 230
       medium_size = 210, 150
       project = request.POST['project']
-      img = images.Image(uploaded_file.read())
-      img.resize(width=330, height=230)
-      thumb = img.execute_transforms(output_encoding=images.PNG)
       new_image = Image()
       new_image.project = Project.objects.get(name=project)
-      new_image.full = db.Blob(uploaded_file.read())
+      f = uploaded_file.read()
+      new_image.full = db.Blob(f)
+      img = images.Image(f)
+      img.resize(width=330, height=230)
+      thumb = img.execute_transforms(output_encoding=images.PNG)
       new_image.large = db.Blob(uploaded_file.read())
       new_image.medium = db.Blob(thumb)
       new_image.save()
