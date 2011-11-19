@@ -32,9 +32,9 @@
             
             <div class="topbar-links bluetext">
             	{% if user.username %}
-	            	Welcome, {{ user.client.name }} | <a href="../../upload/">Upload a Project</a> | <a href="../../logout/">Logout</a>
+	            	{{ user.client.name }} | <a href="../../upload/">Upload a Project</a> | <a href="../../logout/">Logout</a> | <a href="http://about.decisioncandy.com">About</a>
                 	{% else %}
-                    <a href="../../signup/">Sign Up</a> | <a href="../../signin/">Log in</a>
+                    <a href="../../signup/">Sign Up</a> | <a href="../../signin/">Log in</a> | <a href="http://about.decisioncandy.com">About</a>
                 {% endif %}
             </div>
         </div>
@@ -47,7 +47,7 @@
 
 	<div class="footer">    
         {% block footer %}
-        	<small>Copyright 2011 Alex Rattray, Greg Terrono, and Ceasar Bautista. </small>
+        	<small>Copyright 2011 <a href="mailto:rattray@wharton.upenn.edu">Alex Rattray</a>, Greg Terrono, and Ceasar Bautista. </small>
         {% endblock %}
     </div>
 
