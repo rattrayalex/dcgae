@@ -5,19 +5,46 @@
 <div class="bigtext frontcenter">
   The results so far for {{ project.name }}!
 </div>
-<table class="projchoose">
+<div class="projchoose">
   {% for row in image_list %}
-  <tr>
-    {% for image in row %}
-    <td>
-      <div class="rankbox choose">
-        <img src="image_handler/{{ project.name }}/{{ image.id }}" class="rankpic choose"/>
-      </div>
-      <p style="text-align:left; margin-left:35px;">Votes for: {{ image.winvotes.count }} 
-      <br />Votes against: {{ image.losevotes.count }}</p>
-    </td>
-    {% endfor %}
-  </tr>
+	<div class="row">
+		{% for image in row %}
+			{% if forloop.parentloop.counter == 1 %}
+				{% if forloop.counter == 1 %}
+					<div class="span16">
+						<div class="rankbox choose results row">
+							<div class="span4">
+							<img src="image_handler/{{ project.name }}/{{ image.id }}" class="rankpic choose"/>
+							</div>
+							<div class="span8">
+							<p style="text-align:left;">Votes for: {{ image.winvotes.count }} 
+							<br />Votes against: {{ image.losevotes.count }}</p>
+							</div>
+						</div>
+					</div>
+	</div>
+	<div class="row">
+				{% else %}
+					<div class="span8">
+						<div class="rankbox choose results">
+							
+							<img src="image_handler/{{ project.name }}/{{ image.id }}" class="rankpic choose"/>
+							<p style="text-align:left;">Votes for: {{ image.winvotes.count }} 
+							<br />Votes against: {{ image.losevotes.count }}</p>
+						</div>
+					</div>
+				{% endif %}
+			{% else %}
+				<div class="span-one-third">
+				  <div class="rankbox choose">
+					<img src="image_handler/{{ project.name }}/{{ image.id }}" class="rankpic choose"/>
+				  </div>
+				  <p style="text-align:left; margin-left:35px;">Votes for: {{ image.winvotes.count }} 
+				  <br />Votes against: {{ image.losevotes.count }}</p>
+				</div>
+			{% endif %}
+		{% endfor %}
+	</div>
   {% endfor %}
-</table>
+</div>
 {% endblock content %}

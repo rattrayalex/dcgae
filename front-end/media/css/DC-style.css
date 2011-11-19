@@ -82,13 +82,14 @@ a:hover {
 }
 
 /*where the images go.*/
+
 .rankbox, .indecisive {
 	padding:0px;
 	-moz-box-shadow: 0px 0px 10px #8FBCFF;
     -webkit-box-shadow: 0px 0px 10px #8FBCFF;
     box-shadow: 0px 0px 10px #8FBCFF;
 	position:absolute;
-        background-color:white;
+    background-color:white;
 	/* background-image:url(images/whitey.png);	*/
 	/* border: 5px dashed #CCC;     */
 }
@@ -200,12 +201,14 @@ td .rankbox{
 	
 }
 
-.span-one-third {
+.row > [class*="span"] {
 	margin: 20px;
+	padding: 5px;
 }
 
 .rankpic.choose {
 	margin:auto;
+	padding:0px;
 }
 
 .footer {
@@ -271,4 +274,10 @@ input, textarea {
 	position:absolute;
 	top:6px; left:265px;
 	z-index:500;
+}
+
+.rankbox.results {
+	width:100%;
+	position:relative;
+	display:block;
 }
