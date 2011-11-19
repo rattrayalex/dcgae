@@ -21,5 +21,13 @@ handlers:
   static_dir: django/contrib/admin/media
   expiration: '0'
 
+- url: /favicon.ico
+  static_files: front-end/media/images/favicon.ico
+  upload: front-end/media/images/favicon.ico
+
+- url: /robot.txt
+  static_files: front-end/media/static/robot.txt
+  upload: front-end/media/static/robot.txt
+
 - url: /.*
   script: djangoappengine/main/application.py
