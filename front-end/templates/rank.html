@@ -47,8 +47,8 @@
 		$("div#progress").html(progress + " / " + limit);	
 		var left_url = pairs[progress - 1][0];
 		var right_url = pairs[progress - 1][1];
-		$("img#left_img").attr("src", "image_handler/" + project + "/" + left_url);
-		$("img#right_img").attr("src", "image_handler/" + project + "/" + right_url);
+		$("img#left_img").attr("src", "image_handler/" + project + "/" + left_url+"/med");
+		$("img#right_img").attr("src", "image_handler/" + project + "/" + right_url+"/med");
 		$("a#left_link").unbind('click');
 		$("a#right_link").unbind('click');
 		$("a#left_link").click(function(){vote(left_url, right_url)});

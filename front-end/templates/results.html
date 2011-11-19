@@ -14,7 +14,7 @@
 					<div class="span16">
 						<div class="rankbox choose results row">
 							<div class="span4">
-							<img src="image_handler/{{ project.name }}/{{ image.id }}" class="rankpic choose"/>
+							<img src="image_handler/{{ project.name }}/{{ image.id }}/med" class="rankpic choose"/>
 							</div>
 							<div class="span8">
 							<p style="text-align:left;">Votes for: {{ image.winvotes.count }} 
@@ -28,7 +28,7 @@
 					<div class="span8">
 						<div class="rankbox choose results">
 							
-							<img src="image_handler/{{ project.name }}/{{ image.id }}" class="rankpic choose"/>
+							<img src="image_handler/{{ project.name }}/{{ image.id }}/med" class="rankpic choose"/>
 							<p style="text-align:left;">Votes for: {{ image.winvotes.count }} 
 							<br />Votes against: {{ image.losevotes.count }}</p>
 						</div>
@@ -37,7 +37,7 @@
 			{% else %}
 				<div class="span-one-third">
 				  <div class="rankbox choose">
-					<img src="image_handler/{{ project.name }}/{{ image.id }}" class="rankpic choose"/>
+					<img src="image_handler/{{ project.name }}/{{ image.id }}/med" class="rankpic choose"/>
 				  </div>
 				  <p style="text-align:left; margin-left:35px;">Votes for: {{ image.winvotes.count }} 
 				  <br />Votes against: {{ image.losevotes.count }}</p>
