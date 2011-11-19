@@ -105,7 +105,7 @@ a:hover {
 	margin: 0px 75px 0px 75px;
 	top:0px;
 	padding:5px;
-	text-align:center;
+	display: table-cell; text-align:center; vertical-align:middle;
 	overflow:hidden;
 	/*background-image:url(../images/ps-trans-bg-1.PNG);*/
 }
@@ -131,6 +131,7 @@ td .rankbox{
 	max-width:300px;
 	max-height:250px;
 	position:relative;
+	vertical-align:middle;
 }
 
 /*the left rank div*/
@@ -185,18 +186,26 @@ td .rankbox{
 }
 
 .projchoose {
-	width:80%;
+	width:1020px;
 	margin-left:auto;
 	margin-right:auto;
-	position:relative;
 }
-
+.projchoose .row {
+	margin-left:0px;
+}
 .rankbox.choose {
 	position:relative;
-	margin:25px;
+	margin:0px;
+	width: 290px;
+	
+}
+
+.span-one-third {
+	margin: 20px;
 }
 
 .rankpic.choose {
+	margin:auto;
 }
 
 .footer {
