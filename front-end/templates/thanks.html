@@ -1,15 +1,38 @@
+<div class="jtainer">
 <div class="frontcenter">
 <div class="bigtext"> Thanks for helping out {{ Project.creator }}!</div>
+
  <br />
-    Soon, creatives like {{ Project.creator }} will be able to thank you with more than just an exclamation mark. <br />
-    <form>To sign up for updates, <input type="text" value="pop your email here" /></form>
-   <br />
+
+
+    Soon, {{Project.creator}} will be able to thank you with more than just an exclamation mark. ($$$)
    <br />
    <br />
 
-	Feel like helping some other projects? <a href="../../../">Select a new project</a>
-    <br />
-    Or, check out the <a href="../../results/{{ Project.name }}">overall results for this project</a>? 
-    
-    </div>
+   
+   Not registered for Decision Candy?
+   <a href="../../signup/"> Sign Up </a>
+	
+	<br />
+	<br />
+	<br />
+	<br />
+<p>
+	<a href="../../results/{{ Project.name }}"> 
+	    <input id="Results" type="button" value="See Results for this Project" class="btn primary large"/>
+	</a>
+
+	<a href="../../../">
+	    <input id="Projects" type="button" value="More Projects" class="btn large"/>
+	</a>
+</p>
+<!--
+	<a href="../../../">
+	    <input id="RandProject" type="button" value="Random Project" class="btn large"/>
+	</a>
+-->
+</p>
+
 </div>
+</div>
+<br />
