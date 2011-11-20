@@ -11,7 +11,7 @@
 		{% for image in row %}
 			{% if forloop.parentloop.counter == 1 %}
 				{% if forloop.counter == 1 %}
-					<div class="span16">
+					<div class="span12">
 						<div class="rankbox choose results row">
 							<div class="span4">
 							<img src="image_handler/{{ project.name }}/{{ image.id }}/med" class="rankpic choose"/>
@@ -25,7 +25,7 @@
 	</div>
 	<div class="row">
 				{% else %}
-					<div class="span8">
+					<div class="span6">
 						<div class="rankbox choose results">
 							
 							<img src="image_handler/{{ project.name }}/{{ image.id }}/med" class="rankpic choose"/>
@@ -35,8 +35,8 @@
 					</div>
 				{% endif %}
 			{% else %}
-				<div class="span-one-third">
-				  <div class="rankbox choose">
+				<div class="span4">
+				  <div class="rankbox choose results">
 					<img src="image_handler/{{ project.name }}/{{ image.id }}/med" class="rankpic choose"/>
 				  </div>
 				  <p style="text-align:left; margin-left:35px;">Votes for: {{ image.winvotes.count }} 
