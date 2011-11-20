@@ -106,6 +106,8 @@ def vote(request):
     winner = w,
     loser = l,
     time = datetime.datetime.now()
+    winner_comment = data['winner_comment']
+    loser_comment = data['loser_comment']
     )
   vote.save()
   return HttpResponse('boo!')
