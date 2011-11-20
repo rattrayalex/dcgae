@@ -201,11 +201,6 @@ td .rankbox{
 	
 }
 
-.row > [class*="span"] {
-	margin: 20px;
-	padding: 5px;
-}
-
 .rankpic.choose {
 	margin:auto;
 	padding:0px;
