@@ -105,8 +105,8 @@ def vote(request):
     vote = Vote(
     winner = w,
     loser = l,
-    time = datetime.datetime.now()
-    winner_comment = data['winner_comment']
+    time = datetime.datetime.now(),
+    winner_comment = data['winner_comment'],
     loser_comment = data['loser_comment']
     )
   vote.save()
@@ -258,7 +258,7 @@ def results(request, project):
 ##  images = list(Image.objects.filter(project__name=project_name))s
   images.sort(key = lambda x: -x.score)
   context = {
-    'image_list': divide(images, ROW_WIDTH),
+    'image_list': images,
     'project': project,
     'user': request.user,
     }
