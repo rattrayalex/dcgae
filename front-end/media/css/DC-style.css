@@ -107,7 +107,7 @@ a:hover {
 	top:0px;
 	padding:5px;
 	display: table-cell; text-align:center; vertical-align:middle;
-	overflow:hidden;
+	/*overflow:hidden;*/
 	/*background-image:url(../images/ps-trans-bg-1.PNG);*/
 }
 
@@ -275,4 +275,13 @@ input, textarea {
 	width:100%;
 	position:relative;
 	display:block;
+}
+
+.rankcomment {
+	margin:30px 0px 0px -5px; 
+}
+
+.input-default {
+    color: #cdcdcd;
+    font-weight: bold;
 }

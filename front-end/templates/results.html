@@ -16,9 +16,21 @@
 							<div class="span4">
 							<img src="image_handler/{{ project.name }}/{{ image.id }}/med" class="rankpic choose"/>
 							</div>
-							<div class="span8">
+							<div class="span6">
 							<p style="text-align:left;">Votes for: {{ image.winvotes.count }} 
 							<br />Votes against: {{ image.losevotes.count }}</p>
+							<ul>
+								{% for v in image.winvotes.all %}
+									{% if v.winner_comment %}
+										<li>{{ v.winner_comment }}</li>
+									{% endif %}
+								{% endfor %}
+								{% for v in image.losevotes.all %}
+									{% if v.loser_comment %}
+										<li>{{ v.loser_comment }}</li>
+									{% endif %}
+								{% endfor %} 
+							</ul>
 							</div>
 						</div>
 					</div>

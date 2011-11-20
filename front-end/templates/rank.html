@@ -9,37 +9,39 @@
   var progress = 1;
   var project = "{{ Project.name|escapejs }}";
   var pairs = new Array(limit);
-
   
   var limit = '{{ limit }}';
-  function vote(w, l){
+  function vote(w, l, win_position, lose_position){
 	  var url = "/vote/";
-	  var message = new Object();
-	  message.winner = w;
-	  message.loser = l;
+	  var w_id="#"+win_position+"_comment";
+	  var l_id="#"+lose_position+"_comment";
+	  var wc = ($(w_id).hasClass("input-default") ? "" : $(w_id).attr('value'));
+	  var lc = ($(l_id).hasClass("input-default") ? "" : $(l_id).attr('value'));
+	  
 	  $.post(url, {
 		  winner: w, 
-		  loser: l
+		  loser: l, 
+		  winner_comment: wc,
+		  loser_comment: lc
 	  	},
 		function(data, status, xhr){
 			if (status == 'success'){
-				updateList();
+				reloadImages();
 			}
 			else { 
 				alert("something went wrong");
 			}
 		}
 		);
-
-	  //updateList();
   }
-  
-//  var pairs = new Array(limit);
-//  
-//  function isNewPair(l, r){
-//	  
-//  }
-  
+ 
+  function reloadImages(){
+    $('input').each(function(){this.value = $(this).attr('title')});
+	$('input').removeClass('input-default');
+	$('input').addClass('input-default');
+	updateList();
+  }
+ 
   function updateList(){
     if (progress <= limit) {
 //		  var url = "../../../choices/" + project.replace(/ /gi,'%20');
@@ -51,9 +53,9 @@
 		$("img#right_img").attr("src", "image_handler/" + project + "/" + right_url+"/med");
 		$("a#left_link").unbind('click');
 		$("a#right_link").unbind('click');
-		$("a#left_link").click(function(){vote(left_url, right_url)});
-		$("a#right_link").click(function(){vote(right_url, left_url)});
-		  progress += 1;
+		$("a#left_link").click(function(){vote(left_url, right_url, 'left', 'right')});
+		$("a#right_link").click(function(){vote(right_url, left_url, 'right', 'left')});
+		progress += 1;
     }
     else {
       var url = "../../../thanks/"+ project.replace(/ /gi,'%20');
@@ -71,7 +73,27 @@ $(document).ready(function() {
 	{% endfor %}
 
     updateList();
-    });
+	
+	$('input[type="text"]').each(function(){
+ 
+		this.value = $(this).attr('title');
+		$(this).addClass('input-default');
+	 
+		$(this).focus(function(){
+				if(this.value == $(this).attr('title')) {
+					this.value = '';
+					$(this).removeClass('input-default');
+				}
+			});
+		 
+			$(this).blur(function(){
+				if(this.value == '') {
+					this.value = $(this).attr('title');
+					$(this).addClass('input-default');
+				}
+			});
+	});
+});
   </script>
   {% endblock %}
 
@@ -99,21 +121,29 @@ $(document).ready(function() {
 	  <div id="main">
 	  
 		  <div class="ranking" id="mainranking">
-			<a onclick="" id="left_link" class="handcursor">{% csrf_token %}
-			  <div class="rankbox left">
-				  <img id="left_img" src='' class="rankpic"/>
-			  </div>
-			</a>
-			<a onclick="updateList()" id="cantdecide" class="handcursor">
+				
+				<div class="rankbox left">
+					<a onclick="" id="left_link" class="handcursor">{% csrf_token %}
+						<img id="left_img" src='' class="rankpic"/>
+					</a>
+					<input id="left_comment" class="rankcomment" type="text" name="Comment" title="feel free to comment on this design">
+				</div>
+				
+
+			<a onclick="reloadImages()" id="cantdecide" class="handcursor">
 				<div class="rankbuttons">
 				  <div class="indecisive">Can't decide.</div>
 				</div>
 			</a>
-			<a onclick="" id="right_link" class="handcursor">{% csrf_token %}
+				
 				<div class="rankbox right" id="rb_r">
-				  <img id="right_img" src='' class="rankpic"/>
+					<a onclick="" id="right_link" class="handcursor">{% csrf_token %}
+					  <img id="right_img" src='' class="rankpic"/>
+					</a>
+					<input id="right_comment" class="rankcomment" type="text" name="Comment" title="feel free to comment on this design">
 				</div>
-			</a>
+				
+				
 		</div>
 		<!--
 		<ul class="media-grid">
