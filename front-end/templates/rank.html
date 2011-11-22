@@ -12,6 +12,9 @@
   
   var limit = '{{ limit }}';
   function vote(w, l, win_position, lose_position){
+	  $("a#left_link").unbind('click');
+	  $("a#right_link").unbind('click');
+	  $("img").fadeTo('slow',0);
 	  var url = "/vote/";
 	  var w_id="#"+win_position+"_comment";
 	  var l_id="#"+lose_position+"_comment";
@@ -46,15 +49,16 @@
     if (progress <= limit) {
 //		  var url = "../../../choices/" + project.replace(/ /gi,'%20');
 //		  $("div#main").load(url);
-		$("div#progress").html(progress + " / " + limit);	
 		var left_url = pairs[progress - 1][0];
 		var right_url = pairs[progress - 1][1];
 		$("img#left_img").attr("src", "image_handler/" + project + "/" + left_url+"/med");
 		$("img#right_img").attr("src", "image_handler/" + project + "/" + right_url+"/med");
-		$("a#left_link").unbind('click');
-		$("a#right_link").unbind('click');
+		$("div#progress").html(progress + " / " + limit);
 		$("a#left_link").click(function(){vote(left_url, right_url, 'left', 'right')});
 		$("a#right_link").click(function(){vote(right_url, left_url, 'right', 'left')});
+		window.setTimeout(function(){
+		  $("img").fadeTo('slow', 1)
+		}, 1400);
 		progress += 1;
     }
     else {
