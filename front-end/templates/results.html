@@ -5,30 +5,33 @@
 <div class="bigtext frontcenter">
   The results so far for {{ project.name }}!
 </div>
-<div class="projchoose">
+<div class="results">
 	{% for image in image_list %}
-		<div class="row">
-			<div class="span12">
-				<div class="rankbox choose results row">
-					<div class="span4">
+		<div class=" span12">
+			<div class="jtainer row">
+				<div class="span4">
+					<div class="rankbox">
 					<img src="image_handler/{{ project.name }}/{{ image.id }}/med" class="rankpic choose"/>
 					</div>
-					<div class="span6">
-					<p style="text-align:left;">Votes for: {{ image.winvotes.count }} 
-					<br />Votes against: {{ image.losevotes.count }}</p>
+				</div>
+				<div class="span5">
+					<p style="text-align:left;" class="score">
+						<span class="score">{{ image.score }}</span>
+						<span class="wincomment score">+{{ image.winvotes.count }}</span>
+						<span class="losecomment score">-{{ image.losevotes.count }}</span>
+					</p>
 					<ul>
 						{% for v in image.winvotes.all %}
 							{% if v.winner_comment %}
-								<li style="color:blue;">{{ v.winner_comment }}</li>
+								<li class="wincomment">{{ v.winner_comment }}</li>
 							{% endif %}
 						{% endfor %}
 						{% for v in image.losevotes.all %}
 							{% if v.loser_comment %}
-								<li style="color:red;">{{ v.loser_comment }}</li>
+								<li class="losecomment">{{ v.loser_comment }}</li>
 							{% endif %}
 						{% endfor %} 
 					</ul>
-					</div>
 				</div>
 			</div>
 		</div>

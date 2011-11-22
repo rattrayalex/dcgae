@@ -3,6 +3,7 @@
 {% block title %}{{ block.super }} | Home {% endblock %}
 
 {% block content %}
+
 <div class="frontcenter">
 	<div class="bigtext">Choose a project, then choose the best versions.</div>
 	<!--<div class="bigtext">Truly Yummy Feedback.</div>
@@ -21,8 +22,8 @@
     {% for project in row %}
     <div class="span4">
       <a href="/rank/{{ project.name }}">
-        <div class="rankbox choose">
-          <div class="choicehead">{{ project.name }}</div>
+		<div class="choicehead">{{ project.name }}</div>
+        <div class="rankbox choose">        
           <img src="image_handler/{{ project.name }}/0/med" class="rankpic choose"/>
         </div>
       </a>
@@ -32,6 +33,5 @@
   {% endfor %}
 
 </div>
-
 {% endblock content %}
 	

@@ -33,7 +33,7 @@ class Image(models.Model):
 
     @property
     def score(self):
-        return self.winvotes.count()
+        return self.winvotes.count() - self.losevotes.count()
     
     def __unicode__(self):
         return str(self.id)

@@ -256,7 +256,10 @@ def results(request, project):
   project = Project.objects.get(name = project_name)
   images = [img for img in project.images.all()]
 ##  images = list(Image.objects.filter(project__name=project_name))s
+  images.sort(key = lambda x: x.losevotes.count())
+  images.sort(key = lambda x: -x.winvotes.count())
   images.sort(key = lambda x: -x.score)
+  
   context = {
     'image_list': images,
     'project': project,

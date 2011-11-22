@@ -38,9 +38,9 @@ a:hover {
 	left:0px;
 	right:0px;
 	top:0px;
-	min-width:940px;
 	width:100%;
 	position:absolute;
+	background-image:url(../images/old_mathematics_3.png);
 	-webkit-box-shadow:0px 2px 15px #999;
 	box-shadow:0px 2px 15px #999;
 	background: #434950 url(../images/sharkskin.gif) repeat-x -70% 0;
@@ -107,7 +107,7 @@ a:hover {
 	top:0px;
 	padding:5px;
 	display: table-cell; text-align:center; vertical-align:middle;
-	overflow:hidden;
+	/*overflow:hidden;*/
 	/*background-image:url(../images/ps-trans-bg-1.PNG);*/
 }
 
@@ -122,12 +122,9 @@ td .rankbox{
 }
 /* at the top of the choice boxes */
 .choicehead {
+	border-bottom:groove #CCC thin;
 	padding-bottom:0px;
 	text-shadow:#FFF 0px 1px 0px;
-	top:20px;
-	position:relative;
-	text-align:center;
-	z-index:50;
 }
 /*the main ranking pictures. */
 
@@ -280,81 +277,11 @@ input, textarea {
 	display:block;
 }
 
-#list-nav {
-    list-style:none;
-    margin:2px; 
-    padding:0;
+.rankcomment {
+	margin:30px 0px 0px -5px; 
 }
 
-#list-nav li {
-    display:inline;
-    right:0px;
-}
-
-#list-nav li a {
-    text-decoration:none;
-    padding: .2em 1em; 
-    color:#eee;
-    float:left;
-    text-align:center;
-}
-
-#list-nav li a:hover {
-    color:#8FBCFF;
-}
-
-div#welcome {
-	position:absolute; top: -25px; right: 5px; 
-	padding: 10px;
-	font-size:12px;
-	color:#eee;
-}
-
-.results .span12 {
-	margin-left:auto; margin-right:auto;
-	
-}
-
-.jtainer.row {
-	margin-top:20px;
-	padding:10px;
-}
-
-.span4 .rankbox {
-	position:relative;
-	margin: 0px;
-}
-
-.jtainer .span4 {
-	margin-left:0px;
-}
-
-.wincomment, .losecomment{
-	list-style:none;
-}
-
-li.wincomment:before {
-	content:"+ ";
-}
-.wincomment, .wincomment:before {
-	color:#8FBCFF;
-	text-shadow: 0px 1px 1px #888;
-}
-li.losecomment:before {
-	content:"- ";
-}
-.losecomment, .losecomment:before {
-	color:#FFC04F;
-	text-shadow: 0px 1px 1px #888;
-}
-
-.score {
-	font-family:'Copse','Philosopher', "Arial Black", Gadget, sans-serif;
-	font-size: 48px;
-	margin-right:10px; padding-top:10px;
-	text-shadow: 0px 1px 1px #888;
-}
-
-.wincomment.score, .losecomment.score {
-	font-size:32px;
+.input-default {
+    color: #cdcdcd;
+    font-weight: bold;
 }

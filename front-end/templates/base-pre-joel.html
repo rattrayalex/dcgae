@@ -22,28 +22,22 @@
 <body>
     {% block header %}
         <div class="alex-topbar">
+            
             <div class="bigtext" id="title">
             	<a href="../../../">
                 	<span style="color:#8FBCFF;">Decision</span><span style="color:#FFC04F;">Candy</span>
                 	<span style="color:#CCC; font-size:26px;">Truly Yummy Feedback.</span>
 					<div class="betatag" style="color:#8FBCFF;">beta</div>
             	</a>
-            </div>
+           	</div>
+            
             <div class="topbar-links bluetext">
-                <ul id="list-nav">
             	{% if user.username %}
-	        	    <li><a href="../../upload/">Upload a Project</a></li>
-	        	    <li><a href="../../logout/">Logout</a></li>
-	        	    <li><a href="http://about.decisioncandy.com">About</a></li>
-	        	    <div id="welcome"> Welcome, {{ user.client.name }}</div>
-                {% else %}
-                    <li><a href="../../signup/">Sign Up</a></li>
-                    <li><a href="../../signin/">Log in</a></li>
-                    <li><a href="http://about.decisioncandy.com">About</a><li>
+	            	{{ user.client.name }} | <a href="../../upload/">Upload a Project</a> | <a href="../../logout/">Logout</a> | <a href="http://about.decisioncandy.com">About</a>
+                	{% else %}
+                    <a href="../../signup/">Sign Up</a> | <a href="../../signin/">Log in</a> | <a href="http://about.decisioncandy.com">About</a>
                 {% endif %}
-                </ul>
             </div>
-
         </div>
     {% endblock %}
     
