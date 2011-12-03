@@ -184,6 +184,14 @@ def myFileHandler(request):
 
 def upload_project(request):
   if request.method == 'POST':
+    from django.utils import simplejson
+    validation = [request.POST['name']=='',request.POST['description']=='',request.POST['criteria']=='',request.POST['more_criteria']=='',(int(request.POST['picture_num'])<2)]
+    logging.info('made it to here!')
+    if True in validation:
+      response = {'project':'',
+                  'validation':validation}
+      logging.info('name or criteria error')
+      return HttpResponse(simplejson.dumps(response), content_type='application/json')
     logging.warning("trying to upload project")
     logging.warning(request.POST)
 ##    logging.warning(request.user)
@@ -199,8 +207,7 @@ def upload_project(request):
     logging.warning(name)
     new_project.save()
     project = Project.objects.get(name=name)
-    from django.utils import simplejson
-    return HttpResponse(simplejson.dumps({'project':name}), content_type="application/json")
+    return HttpResponse(simplejson.dumps({'project':name, 'validation':validation}), content_type="application/json")
 
 def upload_files(request):
   if request.method == 'POST':
