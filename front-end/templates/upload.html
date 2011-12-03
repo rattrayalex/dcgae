@@ -13,6 +13,7 @@
 	<script type="text/javascript" src="/front-end/media/SWFUpload/handlers.js"></script>
 	<script type="text/javascript" src="/front-end/media/SWFUpload/fileprogress.js"></script>
 	<script type="text/javascript" src="/front-end/media/SWFUpload/plugins/swfupload.queue.js"></script>
+	<script type="text/javascript" src="/front-end/media/bootstrap/js/bootstrap-alerts.js"></script>
 	<script type="text/javascript">
 	var project_name = '';
 	var swfu;
@@ -103,14 +104,25 @@
 	}
 
 	function submit_func() {
-		if ($('.progressContainer').length >= 2) {
-			var form_data = $('#mainForm').serialize();
-			$.ajax({
-			url: '/upload/', 
-			type: 'POST',
-			data: form_data,
-			dataType: 'json',
-			success: function(data, status, xhr) {
+		var form_data = $('#mainForm').serialize();
+		form_data = form_data.concat("&picture_num=",$('.progressContainer').length);//TODO figure out work around for when the cancel button is clicked
+		$.ajax({
+		url: '/upload/', 
+		type: 'POST',
+		data: form_data,
+		dataType: 'json',
+		success: function(data, status, xhr) {
+			if(data['validation'][0]||data['validation'][1]||data['validation'][2]||data['validation'][3]||data['validation'][4]){
+				for(var i=0; i<data['validation'].length; i++){
+					if(data['validation'][i]){
+						$('#alert'+i).show();
+					}
+					else{
+						$('#alert'+i).hide();
+					}
+				}
+			}
+			else {
 				$('#mainSubmit').unbind();
 				var biscuit = document.cookie;
 				var csrf = $('input[name="csrfmiddlewaretoken"]').val();
@@ -123,14 +135,13 @@
 				swfu.setPostParams(postData_settings);
 				//alert('about to upload!');
 				swfu.startUpload();
+			}
 			},
 			error: function(xhr, status, exception) {
 				alert('Something went wrong!');
 			}
 			//$('#mainForm').submit();
 			});
-		}
-		else { alert('Please select at least two images to upload');}
 	};
 	</script>
 {% endblock headcode %}
@@ -145,6 +156,11 @@
         <fieldset>
 		{% for field in project_form %}
 			<div class="clearfix">
+				<div class="alert-message error" id="alert{{forloop.counter0}}" style="display:none;width:280px;padding-left:15px;margin-left:150px;margin-bottom:10px;">
+  					<a class="close" href="javascript:$('#alert{{forloop.counter0}}').hide()">×</a>
+  					<p><strong>This field is required!</strong> </p>
+				</div>
+
 				{{ field.label_tag }}
 				<div class="input">
 					{{ field }}
@@ -152,6 +168,11 @@
 			</div>
 		{% endfor %}
 			<div class="clearfix">
+				<div class="alert-message error" id="alert4" style="display:none;width:280px;padding-left:15px;margin-left:150px;margin-bottom:10px;">
+  					<a class="close" href="javascript:$('#alert4').hide()">×</a>
+  					<p><strong>At least two pictures are required!</strong> </p>
+				</div>
+
 				<label for="id_file_upload">Image:</label>
 				<div class="input">
 					<div id="fsUploadProgress1"></div>

@@ -125,13 +125,12 @@ $(document).ready(function() {
 	  <div id="main">
 	  
 		  <div class="ranking" id="mainranking">
-				
+			<a onclick="" id="left_link" class="handcursor">{% csrf_token %}
 				<div class="rankbox left">
-					<a onclick="" id="left_link" class="handcursor">{% csrf_token %}
-						<img id="left_img" src='' class="rankpic"/>
-					</a>
-					<input id="left_comment" class="rankcomment" type="text" name="Comment" title="feel free to comment on this design">
+					<img id="left_img" src='' class="rankpic"/>
 				</div>
+			</a>
+			<input id="left_comment" class="rankcomment" type="text" style="position:absolute;bottom:10px;left:15px;" name="Comment" title="feel free to comment on this design">
 				
 
 			<a onclick="reloadImages()" id="cantdecide" class="handcursor">
@@ -139,13 +138,13 @@ $(document).ready(function() {
 				  <div class="indecisive">Can't decide.</div>
 				</div>
 			</a>
-				
+			<a onclick="" id="right_link" class="handcursor">{% csrf_token %}
 				<div class="rankbox right" id="rb_r">
-					<a onclick="" id="right_link" class="handcursor">{% csrf_token %}
-					  <img id="right_img" src='' class="rankpic"/>
-					</a>
-					<input id="right_comment" class="rankcomment" type="text" name="Comment" title="feel free to comment on this design">
+					<img id="right_img" src='' class="rankpic"/>
 				</div>
+			</a>
+			<input id="right_comment" class="rankcomment" type="text" style="position:absolute;bottom:10px;right:15px;" name="Comment" title="feel free to comment on this design">
+
 				
 				
 		</div>
