@@ -16,6 +16,7 @@ from django.core.files.uploadedfile import InMemoryUploadedFile
 from filetransfers.api import prepare_upload
 import settings
 from google.appengine.ext import db
+from django.template.defaultfilters import slugify
 
 from app.models import *
 
@@ -194,7 +195,8 @@ def upload_project(request):
       creator = request.user.client,
       reward = 0,
       criteria = request.POST['criteria'],
-      more_criteria = request.POST['more_criteria']
+      more_criteria = request.POST['more_criteria'],
+      slug = slugify(name)
       )
     logging.warning(name)
     new_project.save()

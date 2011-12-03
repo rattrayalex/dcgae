@@ -156,18 +156,19 @@ $(document).ready(function() {
 					<img id="left_img" src='' class="thumbnail"/>
 				</a>
 			</li>
-			<a onclick="updateList()" id="cantdecide" class="handcursor">
-				<div class="rankbuttons">
-				  <div class="indecisive">Can't decide.</div>
-				</div>
-			</a>
+			
 			<li>
 				<a onclick="" id="right_link" class="handcursor">{% csrf_token %}
 					<img id="right_img" src='' class="thumbnail"/>
 				</a>
 			</li>
 		</ul>
-		-->
+		<a onclick="updateList()" id="cantdecide" class="handcursor">
+				<div class="rankbuttons">
+				  <div class="indecisive">Can't decide.</div>
+				</div>
+			</a>
+		</div>-->
 		<div id="fake">
 		
 		</div>

@@ -5,6 +5,8 @@ from django.db.models.signals import post_save
 from django.core.files import File
 import os.path
 import djangotoolbox.fields as models2
+from django.template.defaultfilters import slugify
+
 
 gender_choices = (
     ('M', 'Male'),
@@ -18,6 +20,7 @@ class Project(models.Model):
     reward = models.FloatField(default=0)
     criteria = models.CharField(max_length=100)
     more_criteria = models.TextField()
+    slug = models.SlugField()
 
     def __unicode__(self):
         return self.name

@@ -49,8 +49,8 @@ a:hover {
 
 
 /*DecisionCandy main title*/
-.bigtext #title {
-	
+.bigtext#title {
+	font-size:32px;
 }
 
 /*top center of rank pages, says "which one..."*/
@@ -58,7 +58,7 @@ a:hover {
 	width:100%;
 	text-align:center;
 	position:relative;
-	margin-top: 100px;
+	margin-top: 80px;
 }
 
 #whichone {
@@ -107,7 +107,7 @@ a:hover {
 	top:0px;
 	padding:5px;
 	display: table-cell; text-align:center; vertical-align:middle;
-	overflow:hidden;
+	overflow:visible;
 	/*background-image:url(../images/ps-trans-bg-1.PNG);*/
 }
 
@@ -193,6 +193,7 @@ td .rankbox{
 	width:1020px;
 	margin-left:auto;
 	margin-right:auto;
+	margin-top:20px;
 }
 .projchoose .row {
 	margin-left:0px;
@@ -234,7 +235,7 @@ td .rankbox{
 	position:absolute;
 	text-align:right;
 	right:0px;
-	top:10px;
+	top:0px;
 	margin: 15px;
 	}
 	
@@ -268,16 +269,26 @@ input, textarea {
 }
 
 .betatag {
-	font-size:20px;
+	font-size:15px;
 	position:absolute;
-	top:6px; left:265px;
+	top:6px; left:215px;
 	z-index:500;
+	color:#8FBCFF;
 }
 
 .rankbox.results {
 	width:100%;
 	position:relative;
 	display:block;
+}
+
+.rankcomment {
+	margin:30px 0px 0px -5px; 
+}
+
+.input-default {
+    color: #cdcdcd;
+    font-weight: bold;
 }
 
 #list-nav {
@@ -304,7 +315,7 @@ input, textarea {
 }
 
 div#welcome {
-	position:absolute; top: -25px; right: 5px; 
+	position:absolute; top: -20px; right: 5px; 
 	padding: 10px;
 	font-size:12px;
 	color:#eee;
@@ -358,3 +369,16 @@ li.losecomment:before {
 .wincomment.score, .losecomment.score {
 	font-size:32px;
 }
+
+ul > .wincomment { 
+	margin-top:20px;
+}
+
+/*Here Begins stuff for the bootstrap version of the ranking page*/
+#mainranking .media-grid {
+	margin-left: auto; margin-right: auto;
+	width:auto;
+}
+
+#left_link { margin-left: auto;}
+#right_link { margin-right: auto;}
