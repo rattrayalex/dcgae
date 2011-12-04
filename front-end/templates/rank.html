@@ -143,8 +143,6 @@ $(document).ready(function() {
 				</div>
 			</a>
 			<input id="left_comment" class="rankcomment" type="text" name="Comment" title="feel free to comment on this design">
-				
-
 			<a onclick="reloadImages()" id="cantdecide" class="handcursor">
 				<div class="rankbuttons">
 				  <div class="indecisive">Can't decide.</div>
@@ -152,7 +150,7 @@ $(document).ready(function() {
 			</a>
 			<a onclick="" id="right_link" class="handcursor">{% csrf_token %}
 				<div class="rankbox right" id="rb_r">
-					<img id="right_img" onload='javascript:imageLoaded()' style='opacity:0;' src='' class="rankpic"/>
+					<img id="right_img" onload='javascript:imageLoaded()' src='' class="rankpic"/>
 				</div>
 			</a>
 			<input id="right_comment" class="rankcomment" type="text" name="Comment" title="feel free to comment on this design">
