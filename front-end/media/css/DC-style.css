@@ -201,11 +201,11 @@ td .rankbox{
 .rankbox.choose {
 	position:relative;
 	margin:0px;
-	width: 290px;
+	width: 300px;
 	
 }
 
-.rankpic.choose {
+.rankpic {
 	margin:auto;
 	padding:0px;
 }
@@ -422,3 +422,26 @@ ul p {
 	margin-top:5px;
 	
 }
+
+#dczoom{
+	position:absolute;
+	border:1px solid #3B5998;
+	background:url('front-end/media/images/ajax-loader.GIF') center center no-repeat #fff;
+	padding:5px;
+	color:#fff; -webkit-box-shadow:0px 0px 10px rgba(0,0,0,1);
+	z-index:100;
+	min-width:100px;
+	min-height:100px;
+	}
+#dczoom img{
+	max-width:500px;
+	max-height:500px;
+	}
+#dczoom p{
+	font-size:10px!important;
+	position:relative;
+	bottom:0;left:0;
+	color:#000;
+	margin:0!important;
+	border-top:1px dotted #3B5998;
+	padding-top:2px;}
