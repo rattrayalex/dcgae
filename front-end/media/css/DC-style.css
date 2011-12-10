@@ -108,7 +108,7 @@ a:hover {
 	padding:5px;
 	display: table-cell; text-align:center; vertical-align:middle;
 	overflow:hidden;
-	/*background-image:url(../images/ps-trans-bg-1.PNG);*/
+	background: #FFFFFF url("front-end/media/images/ajax-loader.gif") no-repeat;
 }
 
 td .rankbox{
