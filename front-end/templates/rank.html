@@ -15,7 +15,7 @@
   function vote(w, l, win_position, lose_position){
 	  $("a#left_link").unbind('click');
 	  $("a#right_link").unbind('click');
-	  $("img").fadeOut('slow');
+	  $("img").fadeOut("fast");
 	  var url = "/vote/";
 	  var w_id="#"+win_position+"_comment";
 	  var l_id="#"+lose_position+"_comment";
@@ -47,7 +47,7 @@
 		$("div#progress").html(progress + " / " + limit);
 		$("a#left_link").click(function(){vote(left_url, right_url, 'left', 'right')});
 		$("a#right_link").click(function(){vote(right_url, left_url, 'right', 'left')});
-		$("img").fadeIn('slow');
+		$("img").fadeIn("fast");
 		progress += 1;
 
 	}
