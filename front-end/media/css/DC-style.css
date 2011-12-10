@@ -108,7 +108,7 @@ a:hover {
 	padding:5px;
 	display: table-cell; text-align:center; vertical-align:middle;
 	overflow:hidden;
-	background: #FFFFFF url("front-end/media/images/ajax-loader.gif") no-repeat;
+	background:url(../images/ajax-loader.gif) center center no-repeat #FFF;
 }
 
 td .rankbox{
@@ -198,12 +198,6 @@ td .rankbox{
 .projchoose .row {
 	margin-left:0px;
 }
-.rankbox.choose {
-	position:relative;
-	margin:0px;
-	width: 300px;
-	
-}
 
 .rankpic {
 	margin:auto;
@@ -247,7 +241,7 @@ td .rankbox{
 	-moz-border-radius: 5px;
 	-webkit-border-radius: 5px;
 	border-radius: 5px;
-	background: #E3E3E3 url("/front-end/media/images/dark-grey-pattern.jpg") repeat;
+	background: #E3E3E3 url(../images/dark-grey-pattern.jpg) repeat;
 	border-bottom: 1px solid #FDFDFD;
 	border-left: 1px solid #C6C6C6;
 	border-right: 1px solid #C6C6C6;
@@ -426,12 +420,12 @@ ul p {
 #dczoom{
 	position:absolute;
 	border:1px solid #3B5998;
-	background:url('front-end/media/images/ajax-loader.GIF') center center no-repeat #fff;
+	background:url(../images/ajax-loader.GIF) center center no-repeat #fff;
 	padding:5px;
 	color:#fff; -webkit-box-shadow:0px 0px 10px rgba(0,0,0,1);
 	z-index:100;
-	min-width:100px;
-	min-height:100px;
+	min-width:50px;
+	min-height:50px;
 	}
 #dczoom img{
 	max-width:500px;

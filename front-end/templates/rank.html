@@ -138,9 +138,11 @@ $(document).ready(function() {
 	  <div id="main">
 	  
 		  <div class="ranking" id="mainranking">
-			<a onclick="" id="left_link" class="handcursor">{% csrf_token %}
-				<div class="rankbox left">
-					<img id="left_img" onload='javascript:imageLoaded()' src='' class="rankpic"/>
+			<a onclick="" id="left_link" class="handcursor">{% comment %}{% csrf_token %}{% endcomment %}
+				<div class="rankbox left" style="display:table; height:260px; width: 310px; padding:0px;">
+					<div style="display:table-cell; vertical-align:middle;">
+						<img id="left_img" onload='javascript:imageLoaded()' src='' class="rankpic"/>
+					</div>
 				</div>
 			</a>
 			<input id="left_comment" class="rankcomment" type="text" name="Comment" title="feel free to comment on this design">
@@ -149,9 +151,11 @@ $(document).ready(function() {
 				  <div class="indecisive">Can't decide.</div>
 				</div>
 			</a>
-			<a onclick="" id="right_link" class="handcursor">{% csrf_token %}
-				<div class="rankbox right" id="rb_r">
-					<img id="right_img" onload='javascript:imageLoaded()' src='' class="rankpic"/>
+			<a onclick="" id="right_link" class="handcursor">{% comment %}{% csrf_token %}{% endcomment %}
+				<div class="rankbox right" style="display:table; height:260px; width: 310px; padding:0px;">
+					<div style="display:table-cell; vertical-align:middle;">
+						<img id="right_img" onload='javascript:imageLoaded()' src='' class="rankpic" />
+					</div>
 				</div>
 			</a>
 			<input id="right_comment" class="rankcomment" type="text" name="Comment" title="feel free to comment on this design">
